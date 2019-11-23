@@ -1,14 +1,16 @@
-const url = "https://tsundo-ku.herokuapp.com/books/import"
+const url = "https://asia-northeast1-yy-apps.cloudfunctions.net/CreateTodo"
 
 function onClickHandler(info, tab) {
-  let body = "url="+info.pageUrl;
+  const obj = { url: tab.url, title: tab.title, id: chrome.runtime.id };
+  const body = JSON.stringify(obj);
+  const headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  };
 
   window.fetch(url, {
-    method: 'post',
-    headers: {
-      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-    },
-    credentials: "include",
+    method: "post",
+    headers: headers,
     body: body
   }).then((response) => {
     console.log(response);
